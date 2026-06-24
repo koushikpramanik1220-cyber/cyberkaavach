@@ -11,6 +11,7 @@
             --card-bg: #111a2e;
             --accent-color: #00ff66;
             --alert-color: #ff3333;
+            --warning-color: #ffaa00;
             --text-color: #e2e8f0;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,101 +28,143 @@
         button { background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 12px 24px; font-family: 'Orbitron', sans-serif; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; width: 100%; }
         button:hover { background: rgba(0, 255, 102, 0.1); box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
         .result-box { margin-top: 20px; padding: 15px; border-radius: 4px; background: #020c1b; border-left: 4px solid #233554; display: none; white-space: pre-wrap; line-height: 1.6; }
-        .loading { color: #8892b0; font-style: italic; display: none; margin-top: 10px; }
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; margin-bottom: 10px; }
+        .badge-danger { background: var(--alert-color); color: #fff; }
+        .badge-warning { background: var(--warning-color); color: #000; }
+        .badge-success { background: var(--accent-color); color: #000; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>🛡️ CYBERKAVACH AI</h1>
-        <p class="subtitle">Social Fraud Link Scanner & Cyber Security Consultation Desk</p>
+        <h1>🛡️ CYBERKAVACH ENGINE</h1>
+        <p class="subtitle">Autonomous Social Fraud Link Scanner & Cyber Consultation Desk</p>
     </header>
 
     <div class="grid">
-        <!-- Section 1: Link Scanner -->
+        <!-- Section 1: Link & Text Scanner -->
         <div class="card">
-            <div class="card-title">🔗 Fraud Link & Message Scanner</div>
-            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">Paste any suspicious URLs, phishing messages, or social media text to analyze.</p>
-            <textarea id="linkInput" rows="3" placeholder="Paste the URL or suspicious message here..."></textarea>
-            <button onclick="scanLink()">ANALYZE URL / TEXT</button>
-            <div id="scanLoading" class="loading">⚡ Analyzing payload matrix... Please wait...</div>
+            <div class="card-title">🔗 Autonomous Phishing & Link Scanner</div>
+            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">Analyze suspicious URLs, fake support messages, or social engineering texts in real-time.</p>
+            <textarea id="linkInput" rows="3" placeholder="Paste suspicious URL or text here..."></textarea>
+            <button onclick="analyzeText()">ANALYZE RUNTIME PATTERNS</button>
             <div id="scanResult" class="result-box"></div>
         </div>
 
-        <!-- Section 2: Cyber Helpdesk -->
+        <!-- Section 2: Cyber Helpdesk Database -->
         <div class="card">
-            <div class="card-title">🤖 Cyber Security Helpdesk</div>
-            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">Ask questions regarding cyber crimes, security best practices, or report online fraud incidents.</p>
-            <textarea id="queryInput" rows="4" placeholder="Ask anything about cyber security or report an incident..."></textarea>
-            <button onclick="askHelpdesk()">CONSULT CYBER EXPERT AI</button>
-            <div id="helpLoading" class="loading">🧠 Processing query through cyber defense mesh... Please wait...</div>
+            <div class="card-title">📚 Cyber Security Incident Advisor</div>
+            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">Select a cyber security threat scenario to get instant incident management guidance.</p>
+            <select id="kbQuery" style="width:100%; background:#020c1b; border:1px solid #233554; padding:12px; color:#fff; font-family:'Fira Code'; margin-bottom:15px; border-radius:4px;">
+                <option value="phishing">I clicked on a suspicious phishing link / input credentials</option>
+                <option value="financial">Money was fraudulently deducted from my bank account/UPI</option>
+                <option value="ransomware">My system files are encrypted with a .locked extension</option>
+                <option value="social">Someone cloned my social media profile and is asking for money</option>
+            </select>
+            <button onclick="getAdvisory()">GET INCIDENT RESPONSE PLAN</button>
             <div id="helpResult" class="result-box"></div>
         </div>
     </div>
 </div>
 
 <script>
-    // সিকিউরিটি বটকে ফাঁকি দেওয়ার জন্য এখানে আমরা চাবিটিকে ৩ টুকরো করে রাখলাম
-    const _p1 = "AIzaSy" + "Ab8RN6K1n";
-    const _p2 = "tM4d1Ntx" + "IMu1yH8r";
-    const _p3 = "cwQjtQLfU" + "vs12cP8xXsBsLt8Q";
-
-    async function callGeminiAI(promptText, resultDivId, loadingId) {
-        const resultDiv = document.getElementById(resultDivId);
-        const loadingDiv = document.getElementById(loadingId);
+    // ১. লোকাল রুল-বেসড ফিশিং ডিটেকশন অ্যালগরিদম
+    function analyzeText() {
+        const input = document.getElementById('linkInput').value.trim().toLowerCase();
+        const resultDiv = document.getElementById('scanResult');
         
-        resultDiv.style.display = 'none';
-        loadingDiv.style.display = 'block';
-
-        // রানটাইমে ৩টি টুকরো জুড়ে আসল চাবি তৈরি হবে
-        const API_KEY = _p1 + _p2 + _p3;
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptText }] }]
-                })
-            });
-
-            const data = await response.json();
-            loadingDiv.style.display = 'none';
-            resultDiv.style.display = 'block';
-
-            if (data.candidates && data.candidates[0].content.parts[0].text) {
-                let aiResponse = data.candidates[0].content.parts[0].text;
-                resultDiv.innerHTML = aiResponse;
-                resultDiv.style.borderLeftColor = "#00ff66";
-            } else if (data.error) {
-                resultDiv.innerHTML = "❌ Model Error: " + data.error.message;
-                resultDiv.style.borderLeftColor = "#ff3333";
-            } else {
-                resultDiv.innerHTML = "❌ Failed to generate AI response. Please try again.";
-                resultDiv.style.borderLeftColor = "#ff3333";
-            }
-        } catch (error) {
-            loadingDiv.style.display = 'none';
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = "❌ Connection error! Please check your network.";
-            resultDiv.style.borderLeftColor = "#ff3333";
+        if (!input) { alert('Please enter some text or URL to analyze!'); return; }
+        
+        resultDiv.style.display = 'block';
+        
+        let riskScore = 0;
+        let findings = [];
+        
+        // ১. ডোমেইন বা প্রোটোকল চেক
+        if (input.includes('http://') && !input.includes('https://')) {
+            riskScore += 30;
+            findings.push("🔴 Unencrypted Protocol: Uses vulnerable 'http://' layout instead of secure HTTPS.");
         }
+        
+        // ২. ব্যাঙ্ক সংক্রান্ত কি-ওয়ার্ড ফিশিং ম্যাচিং
+        const bankKeywords = ['sbi', 'netbanking', 'kyc', 'yono', 'hdfc', 'icici', 'otp', 'pan-card', 'update'];
+        let bankMatch = bankKeywords.filter(kw => input.includes(kw));
+        if (bankMatch.length > 0 && (input.includes('.com') || input.includes('.net') || input.includes('.org')) && !input.includes('sbi.co.in') && !input.includes('hdfcbank.com')) {
+            riskScore += 45;
+            findings.push(`🔴 Domain Spoofing Warning: Contains banking keywords [${bankMatch.join(', ')}] on an unofficial web address.`);
+        }
+        
+        // ৩. সোশ্যাল মিডিয়া বা টেক জায়ান্ট ফেক ডোমেইন
+        const techKeywords = ['meta', 'facebook', 'support', 'security-login', 'verify-account', 'instagram'];
+        let techMatch = techKeywords.filter(kw => input.includes(kw));
+        if (techMatch.length >= 2) {
+            riskScore += 40;
+            findings.push("🔴 Credential Harvester Pattern: Suspicious aggregation of security-related tech keywords.");
+        }
+        
+        // ৪. লটারি, ফ্রি রিচার্জ বা সোশ্যাল ইঞ্জিনিয়ারিং অফার
+        const scamKeywords = ['free', 'jio-recharge', 'lottery', 'reward', 'claim-offer', 'win', 'gift-card', 'blogspot'];
+        let scamMatch = scamKeywords.filter(kw => input.includes(kw));
+        if (scamMatch.length > 0) {
+            riskScore += 35;
+            findings.push(`⚠️ Social Engineering Red Flag: Potential lottery or baiting trap detected [${scamMatch.join(', ')}].`);
+        }
+
+        // আউটপুট জেনারেট করা
+        let statusBadge = "";
+        let adviceText = "";
+        
+        if (riskScore >= 70) {
+            statusBadge = `<span class="badge badge-danger">CRITICAL RISK (Score: ${riskScore}%)</span>`;
+            resultDiv.style.borderLeftColor = "var(--alert-color)";
+            adviceText = "\n\n<strong>🛡️ CyberKavach Verdict:</strong> High probability of Phishing/Fraud. DO NOT click this link, input credentials, or share any banking OTP/PIN details. Report this incident immediately to corporate IT or cybercrime portals.";
+        } else if (riskScore >= 30 && riskScore < 70) {
+            statusBadge = `<span class="badge badge-warning">MEDIUM SUSPICION (Score: ${riskScore}%)</span>`;
+            resultDiv.style.borderLeftColor = "var(--warning-color)";
+            adviceText = "\n\n<strong>🛡️ CyberKavach Verdict:</strong> Suspicious pattern detected. Verify the sender's authentic domain manually before proceeding with any interactions.";
+        } else {
+            statusBadge = `<span class="badge badge-success">CLEAN / LOW RISK (Score: 10%)</span>`;
+            resultDiv.style.borderLeftColor = "var(--accent-color)";
+            findings.push("🟢 No obvious social engineering heuristics or blacklisted structures matched.");
+            adviceText = "\n\n<strong>🛡️ CyberKavach Verdict:</strong> The input text looks clear based on immediate local heuristics. Always maintain general operational awareness.";
+        }
+        
+        resultDiv.innerHTML = `${statusBadge}<br><strong>Heuristic Analysis Report:</strong>\n` + findings.join('\n') + adviceText;
     }
 
-    function scanLink() {
-        const text = document.getElementById('linkInput').value.trim();
-        if (!text) { alert('Please enter some text or link to analyze!'); return; }
-        const systemPrompt = `You are CyberKavach AI, an expert Cyber Security analyzer. Analyze the following link or message for potential social engineering, phishing, malware, or financial frauds. Provide a detailed risk score, point out red flags, and give strict preventive advice clearly in English. Here is the text: "${text}"`;
-        callGeminiAI(systemPrompt, 'scanResult', 'scanLoading');
-    }
-
-    function askHelpdesk() {
-        const text = document.getElementById('queryInput').value.trim();
-        if (!text) { alert('Please type your query first!'); return; }
-        const systemPrompt = `You are CyberKavach AI, a helpful and expert Cyber Security Helpdesk assistant. Provide professional, legally sound (according to Indian Cyber Laws if applicable), and protective guidance clearly in English for the following user problem/query: "${text}"`;
-        callGeminiAI(systemPrompt, 'helpResult', 'helpLoading');
+    // ২. লোকাল সাইবার সিকিউরিটি অ্যাডভাইজরি নলেজবেস
+    function getAdvisory() {
+        const selection = document.getElementById('kbQuery').value;
+        const resultDiv = document.getElementById('helpResult');
+        resultDiv.style.display = 'block';
+        resultDiv.style.borderLeftColor = "var(--accent-color)";
+        
+        let report = "";
+        
+        if (selection === "phishing") {
+            report = `<strong>🚨 Incident Response: Compromised Credentials</strong>
+1. <strong>Immediate Action:</strong> Change passwords for the affected account immediately from an isolated device.
+2. <strong>Session Hijacking:</strong> Access account settings and select "Log out of all active devices".
+3. <strong>MFA Check:</strong> Enable or verify Multi-Factor Authentication (MFA) immediately to lock down access.`;
+        } else if (selection === "financial") {
+            report = `<strong>🚨 Incident Response: Financial Fraud Occurred</strong>
+1. <strong>Bank Block:</strong> Immediately contact your banking authority or use mobile apps to freeze all credit/debit cards and UPI profiles.
+2. <strong>National Portal:</strong> File an immediate formal complaint at the National Cyber Crime Reporting Portal (<strong>cybercrime.gov.in</strong>) or call the toll-free national helpline <strong>1930</strong> within the golden hour.
+3. <strong>Log Audit:</strong> Take clear screenshots of transaction references, SMS notifications, and bank statements for evidence submission.`;
+        } else if (selection === "ransomware") {
+            report = `<strong>🚨 Incident Response: Active Ransomware Infection</strong>
+1. <strong>Network Isolation:</strong> Disconnect the affected computer immediately from local Wi-Fi and ethernet meshes to stop lateral propagation.
+2. <strong>Volatile Memory:</strong> Do NOT restart or turn off the computer right away, as encryption keys might reside in volatile RAM.
+3. <strong>Decryption Audit:</strong> Consult NoMoreRansom portals to see if decryptors are freely available for that specific variant strain. Never pay the ransom.`;
+        } else if (selection === "social") {
+            report = `<strong>🚨 Incident Response: Profile Cloning & Impersonation</strong>
+1. <strong>Platform Report:</strong> Use the native platform tools (Facebook, Instagram, LinkedIn) to report the duplicate profile for impersonation.
+2. <strong>Public Broadcast:</strong> Issue a quick public status/post warning your contact list that an active duplicate profile is conducting social engineering traps.
+3. <strong>Evidence Preservation:</strong> Document the URL of the malicious clone profile and save conversation screenshots where money is requested.`;
+        }
+        
+        resultDiv.innerHTML = report;
     }
 </script>
 
