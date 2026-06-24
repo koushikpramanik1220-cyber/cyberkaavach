@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberKavach AI - Smart Link Scanner & Helpdesk</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Orbitron:wght@500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Orbitron:wght=500;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #0a0f1d;
@@ -42,7 +42,7 @@
     <!-- API KEY INPUT BOX -->
     <div class="card api-box">
         <div class="card-title" style="color: #ff3333;">🔑 Gemini API Authentication</div>
-        <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 10px;">তোমার Google AI Studio থেকে নেওয়া Gemini API Key-টি এখানে বসাও (এটি সম্পূর্ণ সুরক্ষিত থাকবে):</p>
+        <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 10px;">Enter your Gemini API Key from Google AI Studio (Stored securely locally):</p>
         <input type="password" id="userApiKey" placeholder="AIzaSy..." value="">
     </div>
 
@@ -50,7 +50,7 @@
         <!-- Section 1: Link Scanner -->
         <div class="card">
             <div class="card-title">🔗 Fraud Link & Message Scanner</div>
-            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">সন্দেহজনক কোনো লিঙ্ক, ফিশিং মেসেজ বা সোশ্যাল মিডিয়া পোস্ট এখানে পেস্ট করে স্ক্যান করো।</p>
+            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">Paste any suspicious URLs, phishing messages, or social media text to analyze.</p>
             <textarea id="linkInput" rows="3" placeholder="Paste the URL or suspicious message here..."></textarea>
             <button onclick="scanLink()">ANALYZE URL / TEXT</button>
             <div id="scanLoading" class="loading">⚡ Analyzing payload matrix... Please wait...</div>
@@ -60,7 +60,7 @@
         <!-- Section 2: Cyber Helpdesk -->
         <div class="card">
             <div class="card-title">🤖 Cyber Security Helpdesk</div>
-            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">সাইবার ক্রাইম, সিকিউরিটি বা কোনো অনলাইন জালিয়াতি নিয়ে যেকোনো প্রশ্ন এআই-কে জিজ্ঞেস করো।</p>
+            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">Ask questions regarding cyber crimes, security best practices, or report online fraud incidents.</p>
             <textarea id="queryInput" rows="4" placeholder="Ask anything about cyber security or report an incident..."></textarea>
             <button onclick="askHelpdesk()">CONSULT CYBER EXPERT AI</button>
             <div id="helpLoading" class="loading">🧠 Processing query through cyber defense mesh... Please wait...</div>
@@ -76,7 +76,7 @@
         const API_KEY = document.getElementById('userApiKey').value.trim();
 
         if (!API_KEY) {
-            alert('দয়া করে প্রথমে ওপরে আপনার Gemini API Key টি বসান!');
+            alert('Please enter your Gemini API Key first!');
             return;
         }
         
@@ -103,16 +103,16 @@
                 resultDiv.innerHTML = aiResponse;
                 resultDiv.style.borderLeftColor = "#00ff66";
             } else if (data.error) {
-                resultDiv.innerHTML = "❌ API Key Error: " + data.error.message + "\nআপনার চাবিটি হয়তো ব্লক হয়েছে বা ভুল। দয়া করে নতুন চাবি ব্যবহার করুন।";
+                resultDiv.innerHTML = "❌ API Key Error: " + data.error.message + "\nYour key might be blocked or invalid. Please try a fresh key.";
                 resultDiv.style.borderLeftColor = "#ff3333";
             } else {
-                resultDiv.innerHTML = "❌ এআই রেসপন্স তৈরি করতে পারেনি। অনুগ্রহ করে আবার চেষ্টা করুন।";
+                resultDiv.innerHTML = "❌ Failed to generate AI response. Please try again.";
                 resultDiv.style.borderLeftColor = "#ff3333";
             }
         } catch (error) {
             loadingDiv.style.display = 'none';
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = "❌ সার্ভার কানেকশন এরর! অনুগ্রহ করে ইন্টারনেট বা এপিআই কী চেক করুন।";
+            resultDiv.innerHTML = "❌ Server connection error! Please check your internet or API key.";
             resultDiv.style.borderLeftColor = "#ff3333";
             console.error(error);
         }
@@ -121,14 +121,14 @@
     function scanLink() {
         const text = document.getElementById('linkInput').value.trim();
         if (!text) { alert('Please enter some text or link to analyze!'); return; }
-        const systemPrompt = `You are CyberKavach AI, an expert Cyber Security analyzer. Analyze the following link or message for potential social engineering, phishing, malware, or financial frauds. Provide a detailed risk score, point out red flags, and give strict preventive advice in Bengali. Here is the text: "${text}"`;
+        const systemPrompt = `You are CyberKavach AI, an expert Cyber Security analyzer. Analyze the following link or message for potential social engineering, phishing, malware, or financial frauds. Provide a detailed risk score, point out red flags, and give strict preventive advice clearly in English. Here is the text: "${text}"`;
         callGeminiAI(systemPrompt, 'scanResult', 'scanLoading');
     }
 
     function askHelpdesk() {
         const text = document.getElementById('queryInput').value.trim();
         if (!text) { alert('Please type your query first!'); return; }
-        const systemPrompt = `You are CyberKavach AI, a helpful and expert Cyber Security Helpdesk assistant. Provide professional, legally sound (according to Indian Cyber Laws if applicable), and protective guidance in Bengali for the following user problem/query: "${text}"`;
+        const systemPrompt = `You are CyberKavach AI, a helpful and expert Cyber Security Helpdesk assistant. Provide professional, legally sound (according to Indian Cyber Laws if applicable), and protective guidance clearly in English for the following user problem/query: "${text}"`;
         callGeminiAI(systemPrompt, 'helpResult', 'helpLoading');
     }
 </script>
