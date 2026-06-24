@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberKavach AI - Smart Link Scanner & Helpdesk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Orbitron:wght@500;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0f1d;
+            --card-bg: #111a2e;
+            --accent-color: #00ff66;
+            --alert-color: #ff3333;
+            --text-color: #e2e8f0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Fira Code', monospace; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 30px; border-bottom: 2px dashed var(--accent-color); padding-bottom: 20px; }
+        h1 { font-family: 'Orbitron', sans-serif; color: var(--accent-color); font-size: 2.5rem; text-shadow: 0 0 10px rgba(0, 255, 102, 0.3); margin-bottom: 10px; }
+        .subtitle { color: #8892b0; font-size: 1rem; }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
+        .card { background: var(--card-bg); border: 1px solid #233554; border-radius: 8px; padding: 25px; box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7); }
+        .card-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; margin-bottom: 15px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        input, textarea { width: 100%; background: #020c1b; border: 1px solid #233554; border-radius: 4px; padding: 12px; color: #fff; font-family: 'Fira Code', monospace; font-size: 0.9rem; margin-bottom: 15px; transition: 0.3s; }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 8px rgba(0, 255, 102, 0.2); }
+        button { background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 12px 24px; font-family: 'Orbitron', sans-serif; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; width: 100%; }
+        button:hover { background: rgba(0, 255, 102, 0.1); box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); }
+        .result-box { margin-top: 20px; padding: 15px; border-radius: 4px; background: #020c1b; border-left: 4px solid #233554; display: none; white-space: pre-wrap; line-height: 1.6; }
+        .loading { color: #8892b0; font-style: italic; display: none; margin-top: 10px; }
+        .api-box { border: 1px dashed var(--alert-color); padding: 15px; margin-bottom: 25px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🛡️ CYBERKAVACH AI</h1>
+        <p class="subtitle">Social Fraud Link Scanner & Cyber Security Consultation Desk</p>
+    </header>
+
+    <!-- API KEY INPUT BOX -->
+    <div class="card api-box">
+        <div class="card-title" style="color: #ff3333;">🔑 Gemini API Authentication</div>
+        <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 10px;">তোমার Google AI Studio থেকে নেওয়া Gemini API Key-টি এখানে বসাও (এটি সম্পূর্ণ সুরক্ষিত থাকবে):</p>
+        <input type="password" id="userApiKey" placeholder="AIzaSy..." value="">
+    </div>
+
+    <div class="grid">
+        <!-- Section 1: Link Scanner -->
+        <div class="card">
+            <div class="card-title">🔗 Fraud Link & Message Scanner</div>
+            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">সন্দেহজনক কোনো লিঙ্ক, ফিশিং মেসেজ বা সোশ্যাল মিডিয়া পোস্ট এখানে পেস্ট করে স্ক্যান করো।</p>
+            <textarea id="linkInput" rows="3" placeholder="Paste the URL or suspicious message here..."></textarea>
+            <button onclick="scanLink()">ANALYZE URL / TEXT</button>
+            <div id="scanLoading" class="loading">⚡ Analyzing payload matrix... Please wait...</div>
+            <div id="scanResult" class="result-box"></div>
+        </div>
+
+        <!-- Section 2: Cyber Helpdesk -->
+        <div class="card">
+            <div class="card-title">🤖 Cyber Security Helpdesk</div>
+            <p style="font-size: 0.85rem; color: #8892b0; margin-bottom: 15px;">সাইবার ক্রাইম, সিকিউরিটি বা কোনো অনলাইন জালিয়াতি নিয়ে যেকোনো প্রশ্ন এআই-কে জিজ্ঞেস করো।</p>
+            <textarea id="queryInput" rows="4" placeholder="Ask anything about cyber security or report an incident..."></textarea>
+            <button onclick="askHelpdesk()">CONSULT CYBER EXPERT AI</button>
+            <div id="helpLoading" class="loading">🧠 Processing query through cyber defense mesh... Please wait...</div>
+            <div id="helpResult" class="result-box"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function callGeminiAI(promptText, resultDivId, loadingId) {
+        const resultDiv = document.getElementById(resultDivId);
+        const loadingDiv = document.getElementById(loadingId);
+        const API_KEY = document.getElementById('userApiKey').value.trim();
+
+        if (!API_KEY) {
+            alert('দয়া করে প্রথমে ওপরে আপনার Gemini API Key টি বসান!');
+            return;
+        }
+        
+        resultDiv.style.display = 'none';
+        loadingDiv.style.display = 'block';
+
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: promptText }] }]
+                })
+            });
+
+            const data = await response.json();
+            loadingDiv.style.display = 'none';
+            resultDiv.style.display = 'block';
+
+            if (data.candidates && data.candidates[0].content.parts[0].text) {
+                let aiResponse = data.candidates[0].content.parts[0].text;
+                resultDiv.innerHTML = aiResponse;
+                resultDiv.style.borderLeftColor = "#00ff66";
+            } else if (data.error) {
+                resultDiv.innerHTML = "❌ API Key Error: " + data.error.message + "\nআপনার চাবিটি হয়তো ব্লক হয়েছে বা ভুল। দয়া করে নতুন চাবি ব্যবহার করুন।";
+                resultDiv.style.borderLeftColor = "#ff3333";
+            } else {
+                resultDiv.innerHTML = "❌ এআই রেসপন্স তৈরি করতে পারেনি। অনুগ্রহ করে আবার চেষ্টা করুন।";
+                resultDiv.style.borderLeftColor = "#ff3333";
+            }
+        } catch (error) {
+            loadingDiv.style.display = 'none';
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = "❌ সার্ভার কানেকশন এরর! অনুগ্রহ করে ইন্টারনেট বা এপিআই কী চেক করুন।";
+            resultDiv.style.borderLeftColor = "#ff3333";
+            console.error(error);
+        }
+    }
+
+    function scanLink() {
+        const text = document.getElementById('linkInput').value.trim();
+        if (!text) { alert('Please enter some text or link to analyze!'); return; }
+        const systemPrompt = `You are CyberKavach AI, an expert Cyber Security analyzer. Analyze the following link or message for potential social engineering, phishing, malware, or financial frauds. Provide a detailed risk score, point out red flags, and give strict preventive advice in Bengali. Here is the text: "${text}"`;
+        callGeminiAI(systemPrompt, 'scanResult', 'scanLoading');
+    }
+
+    function askHelpdesk() {
+        const text = document.getElementById('queryInput').value.trim();
+        if (!text) { alert('Please type your query first!'); return; }
+        const systemPrompt = `You are CyberKavach AI, a helpful and expert Cyber Security Helpdesk assistant. Provide professional, legally sound (according to Indian Cyber Laws if applicable), and protective guidance in Bengali for the following user problem/query: "${text}"`;
+        callGeminiAI(systemPrompt, 'helpResult', 'helpLoading');
+    }
+</script>
+
+</body>
+</html>
