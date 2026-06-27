@@ -1438,25 +1438,19 @@ document.getElementById('urlInput').addEventListener('keydown', e => {
     ckShowTyping();
 
     try {
-      var res = await fetch('https://api.anthropic.com/v1/messages', {
+         var res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 1000,
-          system: 'You are CyberKavach AI — a friendly, expert cybersecurity assistant for Indian users. Answer ONLY cybersecurity questions. Topics: phishing, OTP fraud, KYC fraud, UPI scams, lottery scams, job fraud, cyber hygiene. Support English, Bengali, Hindi — reply in the user\'s language. Keep answers under 200 words unless absolutely needed. Always mention 1930 helpline or cybercrime.gov.in when relevant. If asked non-cyber questions, politely redirect.',
-          messages: [{ role: 'user', content: q }]
-        })
+        body: JSON.stringify({ message: q })
       });
       var data = await res.json();
       ckRemoveTyping();
-      var reply = (data.content && data.content[0] && data.content[0].text)
-        ? data.content[0].text
-        : 'Sorry, could not get a response. Please try again.';
+      var reply = data.reply || 'Sorry, could not get a response.';
       ckAddMsg('bot', reply);
     } catch(e) {
       ckRemoveTyping();
       ckAddMsg('bot', '⚠️ Connection error. Please try again.');
+
     }
 
     ckBusy = false;
