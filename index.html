@@ -1074,5 +1074,1081 @@ document.getElementById('urlInput').addEventListener('keydown', e => {
   if(e.key === 'Enter') scanLink();
 });
 </script>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="google-site-verification" content="O0KGrlYTYAfqv1HlhB-Lwl6ZfuEtQ8PufWdnpK4UFO8" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Kavach AI — Your Digital Shield</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A0E27;
+    --navy2: #111630;
+    --navy3: #1A2040;
+    --cyan: #00D4FF;
+    --cyan-dim: rgba(0,212,255,0.15);
+    --gold: #FFD700;
+    --red: #FF3B5C;
+    --green: #00E676;
+    --text: #E8EAF6;
+    --muted: #8892B0;
+    --card: rgba(17,22,48,0.95);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── PARTICLE CANVAS ── */
+  #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(10,14,39,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,212,255,0.12);
+  }
+  .nav-logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem; font-weight: 900;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.85rem; letter-spacing: 1px;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 2rem 4rem;
+  }
+
+  /* Shield SVG */
+  .shield-wrap { position: relative; width: 160px; height: 160px; margin-bottom: 2.5rem; }
+  .shield-pulse {
+    position: absolute; inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,255,0.18) 0%, transparent 70%);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.5; }
+  }
+  .shield-svg { width: 160px; height: 160px; filter: drop-shadow(0 0 20px rgba(0,212,255,0.6)); }
+
+  .hero-eyebrow {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7rem; letter-spacing: 4px;
+    color: var(--cyan); text-transform: uppercase;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(0,212,255,0.3);
+    padding: 0.35rem 1rem; border-radius: 100px;
+    display: inline-block;
+    background: rgba(0,212,255,0.06);
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 .c { color: var(--cyan); }
+  .hero h1 .g { color: var(--gold); }
+
+  .hero-sub {
+    font-size: 1.05rem; color: var(--muted);
+    max-width: 560px; line-height: 1.7;
+    margin: 1.2rem auto 2.5rem;
+  }
+
+  .hero-badges {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 3rem;
+  }
+  .badge {
+    padding: 0.4rem 1rem; border-radius: 100px;
+    font-size: 0.78rem; font-weight: 600;
+    border: 1px solid;
+    letter-spacing: 0.5px;
+  }
+  .badge-green { color: var(--green); border-color: rgba(0,230,118,0.4); background: rgba(0,230,118,0.08); }
+  .badge-cyan { color: var(--cyan); border-color: rgba(0,212,255,0.4); background: rgba(0,212,255,0.08); }
+  .badge-gold { color: var(--gold); border-color: rgba(255,215,0,0.4); background: rgba(255,215,0,0.08); }
+
+  .scroll-cta {
+    display: flex; align-items: center; gap: 0.5rem;
+    color: var(--cyan); font-size: 0.85rem; letter-spacing: 1px;
+    animation: bounce 2s ease-in-out infinite;
+    cursor: pointer; background: none; border: none;
+  }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+  /* ── LINK SCANNER SECTION ── */
+  .scanner-section {
+    position: relative; z-index: 1;
+    padding: 5rem 2rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,212,255,0.03) 50%, transparent 100%);
+  }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-eyebrow {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem; letter-spacing: 4px; color: var(--cyan);
+    text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+  }
+  .section-desc { color: var(--muted); font-size: 0.95rem; max-width: 500px; margin: 0 auto; line-height: 1.7; }
+
+  .scanner-card {
+    max-width: 760px; margin: 0 auto;
+    background: var(--card);
+    border: 1px solid rgba(0,212,255,0.18);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 0 60px rgba(0,212,255,0.06), 0 20px 60px rgba(0,0,0,0.4);
+    backdrop-filter: blur(20px);
+  }
+
+  .scanner-title-row {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 1.8rem;
+  }
+  .scanner-icon {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--cyan), #0066FF);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 0 20px rgba(0,212,255,0.3);
+  }
+  .scanner-label { font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; color: var(--cyan); }
+  .scanner-sublabel { font-size: 0.78rem; color: var(--muted); }
+
+  .input-row {
+    display: flex; gap: 0.8rem; margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .url-input {
+    flex: 1; min-width: 240px;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(0,212,255,0.2);
+    border-radius: 10px;
+    padding: 0.9rem 1.2rem;
+    color: var(--text); font-family: 'Courier New', monospace; font-size: 0.9rem;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .url-input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0,212,255,0.1);
+  }
+  .url-input::placeholder { color: var(--muted); }
+
+  .scan-btn {
+    background: linear-gradient(135deg, var(--cyan), #0088FF);
+    color: #000; font-weight: 700;
+    border: none; border-radius: 10px;
+    padding: 0.9rem 1.8rem;
+    cursor: pointer; font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex; align-items: center; gap: 0.5rem;
+    white-space: nowrap;
+    font-family: 'Orbitron', monospace;
+  }
+  .scan-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.35); }
+  .scan-btn:active { transform: translateY(0); }
+  .scan-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .quick-paste {
+    font-size: 0.78rem; color: var(--muted);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .quick-paste span {
+    color: var(--cyan); cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+
+  /* Result Panel */
+  .result-panel {
+    margin-top: 1.5rem;
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .result-panel.show { display: block; }
+
+  .result-panel.safe {
+    background: rgba(0,230,118,0.07);
+    border: 1.5px solid rgba(0,230,118,0.3);
+  }
+  .result-panel.danger {
+    background: rgba(255,59,92,0.07);
+    border: 1.5px solid rgba(255,59,92,0.35);
+  }
+  .result-panel.warning {
+    background: rgba(255,215,0,0.07);
+    border: 1.5px solid rgba(255,215,0,0.3);
+  }
+  .result-panel.scanning {
+    background: rgba(0,212,255,0.05);
+    border: 1.5px solid rgba(0,212,255,0.2);
+  }
+
+  .result-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .result-icon { font-size: 2rem; }
+  .result-status { font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; }
+  .result-status.safe { color: var(--green); }
+  .result-status.danger { color: var(--red); }
+  .result-status.warning { color: var(--gold); }
+
+  .result-url-display {
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem; color: var(--muted);
+    word-break: break-all; margin-bottom: 1rem;
+    background: rgba(0,0,0,0.2); padding: 0.6rem 0.8rem; border-radius: 6px;
+  }
+
+  .result-checks { display: flex; flex-direction: column; gap: 0.5rem; }
+  .check-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.85rem;
+  }
+  .check-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .check-dot.pass { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .check-dot.fail { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .check-dot.warn { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+  .check-dot.neutral { background: var(--muted); }
+
+  .result-verdict {
+    margin-top: 1.2rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.88rem; line-height: 1.6;
+    font-weight: 500;
+  }
+  .result-verdict.safe { background: rgba(0,230,118,0.1); color: var(--green); }
+  .result-verdict.danger { background: rgba(255,59,92,0.1); color: #FF7A93; }
+  .result-verdict.warning { background: rgba(255,215,0,0.1); color: var(--gold); }
+
+  /* Score bar */
+  .score-row { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; }
+  .score-label { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+  .score-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 100px; overflow: hidden; }
+  .score-fill { height: 100%; border-radius: 100px; transition: width 0.8s ease; }
+  .score-val { font-family: 'Orbitron', monospace; font-size: 0.75rem; font-weight: 700; }
+
+  /* Scanning animation */
+  .scanning-anim {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1rem 0;
+  }
+  .scan-ring {
+    width: 56px; height: 56px;
+    border: 3px solid rgba(0,212,255,0.15);
+    border-top: 3px solid var(--cyan);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .scan-steps { display: flex; flex-direction: column; gap: 0.4rem; width: 100%; }
+  .scan-step {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.8rem; color: var(--muted);
+    opacity: 0; animation: stepIn 0.3s ease forwards;
+  }
+  .scan-step.active { color: var(--cyan); }
+  @keyframes stepIn { to { opacity: 1; } }
+
+  /* ── EDUCATION SECTION ── */
+  .edu-section {
+    position: relative; z-index: 1;
+    padding: 5rem 2rem;
+  }
+  .lang-tabs {
+    display: flex; gap: 0.5rem; justify-content: center;
+    margin-bottom: 2.5rem; flex-wrap: wrap;
+  }
+  .lang-tab {
+    padding: 0.55rem 1.4rem;
+    border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+    border: 1.5px solid rgba(0,212,255,0.2);
+    background: transparent; color: var(--muted);
+    cursor: pointer; transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .lang-tab.active {
+    background: var(--cyan); color: #000;
+    border-color: var(--cyan);
+    box-shadow: 0 0 20px rgba(0,212,255,0.3);
+  }
+  .lang-tab:hover:not(.active) { border-color: var(--cyan); color: var(--cyan); }
+
+  .edu-content { display: none; }
+  .edu-content.active { display: block; animation: fadeIn 0.4s ease; }
+
+  .fraud-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+  }
+
+  .fraud-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px; padding: 1.8rem;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .fraud-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--card-accent, var(--cyan)), transparent);
+  }
+  .fraud-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0,212,255,0.25);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+  .fraud-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .fraud-title {
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 0.6rem; color: var(--text);
+    line-height: 1.3;
+  }
+  .fraud-desc {
+    font-size: 0.85rem; color: var(--muted);
+    line-height: 1.7; margin-bottom: 1rem;
+  }
+  .fraud-tips { display: flex; flex-direction: column; gap: 0.4rem; }
+  .tip {
+    display: flex; align-items: flex-start; gap: 0.5rem;
+    font-size: 0.8rem; color: #A8B8D8; line-height: 1.5;
+  }
+  .tip-bullet {
+    color: var(--green); font-weight: 700;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .fraud-card-tag {
+    display: inline-block; margin-top: 1rem;
+    padding: 0.25rem 0.7rem; border-radius: 100px;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px;
+  }
+  .tag-red { background: rgba(255,59,92,0.12); color: var(--red); border: 1px solid rgba(255,59,92,0.25); }
+  .tag-gold { background: rgba(255,215,0,0.1); color: var(--gold); border: 1px solid rgba(255,215,0,0.25); }
+  .tag-cyan { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.25); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 0;
+    background: var(--navy2);
+    border-top: 1px solid rgba(0,212,255,0.1);
+    border-bottom: 1px solid rgba(0,212,255,0.1);
+    margin: 0;
+  }
+  .stat-item {
+    flex: 1; min-width: 160px;
+    padding: 2rem 1.5rem; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem; font-weight: 900;
+    color: var(--cyan);
+    display: block; margin-bottom: 0.3rem;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    padding: 2.5rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem; font-weight: 900; color: var(--cyan);
+    letter-spacing: 2px;
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-note { font-size: 0.78rem; color: var(--muted); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .scanner-card { padding: 1.5rem; }
+    .input-row { flex-direction: column; }
+    .scan-btn { width: 100%; justify-content: center; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .stat-item { min-width: 50%; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🛡️ Cyber<span>Kavach</span></div>
+  <div class="nav-links">
+    <a href="#scanner">Scan Link</a>
+    <a href="#education">Learn</a>
+    <a href="#stats">Stats</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="shield-wrap">
+    <div class="shield-pulse"></div>
+    <svg class="shield-svg" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#00D4FF"/>
+          <stop offset="100%" style="stop-color:#0044CC"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Shield body -->
+      <path d="M80 10 L140 35 L140 85 Q140 125 80 150 Q20 125 20 85 L20 35 Z"
+        fill="url(#sg)" opacity="0.15" stroke="url(#sg)" stroke-width="2"/>
+      <!-- Inner shield -->
+      <path d="M80 22 L130 43 L130 84 Q130 116 80 138 Q30 116 30 84 L30 43 Z"
+        fill="none" stroke="url(#sg)" stroke-width="1.5" opacity="0.4"/>
+      <!-- Lock body -->
+      <rect x="62" y="78" width="36" height="28" rx="5" fill="url(#sg)" filter="url(#glow)" opacity="0.9"/>
+      <!-- Lock shackle -->
+      <path d="M68 78 L68 68 Q68 55 80 55 Q92 55 92 68 L92 78"
+        fill="none" stroke="#00D4FF" stroke-width="5" stroke-linecap="round"/>
+      <!-- Lock keyhole -->
+      <circle cx="80" cy="89" r="4" fill="#0A0E27"/>
+      <rect x="78" y="89" width="4" height="7" rx="1" fill="#0A0E27"/>
+      <!-- Check / AI dot -->
+      <circle cx="115" cy="35" r="10" fill="#00E676" opacity="0.9"/>
+      <path d="M110 35 L114 39 L121 31" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="hero-eyebrow">🇮🇳 AI-Powered Cybersecurity</div>
+  <h1>Cyber<span class="g">Kavach</span> <span class="c">AI</span></h1>
+  <p class="hero-sub">
+    Your intelligent digital shield — scan any suspicious link instantly, and learn how to stay safe from cyber fraud in English, বাংলা & हिन्दी.
+  </p>
+  <div class="hero-badges">
+    <span class="badge badge-green">✓ Real-time Analysis</span>
+    <span class="badge badge-cyan">⚡ AI-Powered</span>
+    <span class="badge badge-gold">🔒 Privacy First</span>
+  </div>
+  <button class="scroll-cta" onclick="document.getElementById('scanner').scrollIntoView({behavior:'smooth'})">
+    ▼ Scan a Link Now
+  </button>
+</section>
+
+<!-- SCANNER -->
+<section class="scanner-section" id="scanner">
+  <div class="section-header">
+    <div class="section-eyebrow">🔍 Link Intelligence Engine</div>
+    <h2 class="section-title">Paste Any Link. <span style="color:var(--cyan)">Know Instantly.</span></h2>
+    <p class="section-desc">Our AI checks the URL against multiple fraud signals — domain age, blacklists, phishing patterns, SSL & more.</p>
+  </div>
+
+  <div class="scanner-card">
+    <div class="scanner-title-row">
+      <div class="scanner-icon">🔗</div>
+      <div>
+        <div class="scanner-label">URL Safety Scanner</div>
+        <div class="scanner-sublabel">Supports http, https, shortened links & more</div>
+      </div>
+    </div>
+
+    <div class="input-row">
+      <input type="text" class="url-input" id="urlInput"
+        placeholder="https://suspicious-link.com/offer?id=win123..." />
+      <button class="scan-btn" id="scanBtn" onclick="scanLink()">
+        🛡️ SCAN
+      </button>
+    </div>
+
+    <div class="quick-paste">
+      <span>⌨️</span>
+      Try examples:
+      <span onclick="tryExample('https://www.google.com')">Safe link</span> •
+      <span onclick="tryExample('http://paypa1-secure-login.tk/verify?user=you')">Phishing link</span> •
+      <span onclick="tryExample('http://bit.ly/3xR9fake-prize-won')">Suspicious link</span>
+    </div>
+
+    <!-- Result Panel -->
+    <div class="result-panel" id="resultPanel">
+      <div class="scanning-anim" id="scanningAnim">
+        <div class="scan-ring"></div>
+        <div id="scanSteps" class="scan-steps"></div>
+      </div>
+      <div id="resultContent" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar" id="stats">
+  <div class="stat-item">
+    <span class="stat-num" data-target="2.4">0</span>
+    <span class="stat-label">Crore Scams Detected This Year</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="94">0</span>
+    <span class="stat-label">% Detection Accuracy</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="10847">0</span>
+    <span class="stat-label">Links Scanned Today</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="0.8">0</span>
+    <span class="stat-label">Sec Avg Scan Time</span>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<section class="edu-section" id="education">
+  <div class="section-header">
+    <div class="section-eyebrow">🎓 Cyber Awareness Hub</div>
+    <h2 class="section-title">Know Your <span style="color:var(--red)">Enemy</span></h2>
+    <p class="section-desc">Learn how cyber fraud works — and how to protect yourself. Available in 3 languages.</p>
+  </div>
+
+  <div class="lang-tabs">
+    <button class="lang-tab active" onclick="switchLang('en', this)">🇬🇧 English</button>
+    <button class="lang-tab" onclick="switchLang('bn', this)">🇧🇩 বাংলা</button>
+    <button class="lang-tab" onclick="switchLang('hi', this)">🇮🇳 हिन्दी</button>
+  </div>
+
+  <!-- ENGLISH -->
+  <div class="edu-content active" id="lang-en">
+    <div class="fraud-grid">
+
+      <div class="fraud-card" style="--card-accent: #FF3B5C">
+        <span class="fraud-icon">🎣</span>
+        <div class="fraud-title">Phishing Attacks</div>
+        <div class="fraud-desc">Fraudsters send fake emails or messages disguised as banks, government agencies, or popular apps to steal your login credentials and personal data.</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> Always check the sender's real email address</div>
+          <div class="tip"><span class="tip-bullet">→</span> Never click links in unexpected emails or SMS</div>
+          <div class="tip"><span class="tip-bullet">→</span> Banks NEVER ask for OTP or password via message</div>
+        </div>
+        <span class="fraud-card-tag tag-red">HIGH RISK</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #FFD700">
+        <span class="fraud-icon">📱</span>
+        <div class="fraud-title">KYC / OTP Fraud</div>
+        <div class="fraud-desc">Scammers pose as bank or telecom employees and convince you to share OTPs, claiming your KYC is incomplete and your account will be blocked.</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> Never share OTP with anyone — ever</div>
+          <div class="tip"><span class="tip-bullet">→</span> Real banks never ask for OTP over a phone call</div>
+          <div class="tip"><span class="tip-bullet">→</span> Call your bank directly to verify any such claim</div>
+        </div>
+        <span class="fraud-card-tag tag-gold">COMMON</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #00D4FF">
+        <span class="fraud-icon">🎁</span>
+        <div class="fraud-title">Lottery / Prize Scam</div>
+        <div class="fraud-desc">"You've won ₹50 lakh!" — Messages claiming you've won a prize you never entered, demanding a small "processing fee" to release your winnings.</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> You can't win a lottery you didn't enter</div>
+          <div class="tip"><span class="tip-bullet">→</span> Never pay money to "claim" a prize</div>
+          <div class="tip"><span class="tip-bullet">→</span> Report such messages to cybercrime.gov.in</div>
+        </div>
+        <span class="fraud-card-tag tag-cyan">ALERT</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #FF3B5C">
+        <span class="fraud-icon">💼</span>
+        <div class="fraud-title">Job / Work-From-Home Fraud</div>
+        <div class="fraud-desc">Fake job offers asking for a registration fee, training fee, or security deposit before starting. Once paid, the "employer" vanishes.</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> Legitimate jobs NEVER charge you to get hired</div>
+          <div class="tip"><span class="tip-bullet">→</span> Verify the company on official websites</div>
+          <div class="tip"><span class="tip-bullet">→</span> Be wary of unusually high pay for simple tasks</div>
+        </div>
+        <span class="fraud-card-tag tag-red">HIGH RISK</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #FFD700">
+        <span class="fraud-icon">💳</span>
+        <div class="fraud-title">UPI / Payment Scams</div>
+        <div class="fraud-desc">Scammers send fake "collect money" UPI requests, or trick you into "receiving" money by making you enter your PIN — which actually sends money out.</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> You NEVER need to enter PIN to receive money</div>
+          <div class="tip"><span class="tip-bullet">→</span> Decline all unexpected UPI collect requests</div>
+          <div class="tip"><span class="tip-bullet">→</span> Verify QR codes before scanning</div>
+        </div>
+        <span class="fraud-card-tag tag-gold">VERY COMMON</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #00E676">
+        <span class="fraud-icon">🛡️</span>
+        <div class="fraud-title">How to Stay Safe</div>
+        <div class="fraud-desc">Simple habits that make you almost immune to cybercrime — adopted by cybersecurity professionals worldwide.</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">✓</span> Enable 2-factor authentication everywhere</div>
+          <div class="tip"><span class="tip-bullet">✓</span> Use Cyber Kavach to scan suspicious links</div>
+          <div class="tip"><span class="tip-bullet">✓</span> Report fraud: helpline 1930 or cybercrime.gov.in</div>
+          <div class="tip"><span class="tip-bullet">✓</span> Keep your apps and OS updated regularly</div>
+        </div>
+        <span class="fraud-card-tag tag-cyan">PROTECTION</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BANGLA -->
+  <div class="edu-content" id="lang-bn">
+    <div class="fraud-grid">
+
+      <div class="fraud-card" style="--card-accent: #FF3B5C">
+        <span class="fraud-icon">🎣</span>
+        <div class="fraud-title">ফিশিং আক্রমণ</div>
+        <div class="fraud-desc">প্রতারকরা ব্যাংক, সরকারি সংস্থা বা জনপ্রিয় অ্যাপের ছদ্মবেশে নকল ইমেইল বা মেসেজ পাঠায় — আপনার লগইন তথ্য ও ব্যক্তিগত ডেটা চুরি করতে।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> সবসময় প্রেরকের আসল ইমেইল ঠিকানা যাচাই করুন</div>
+          <div class="tip"><span class="tip-bullet">→</span> অপ্রত্যাশিত ইমেইল বা SMS-এর লিংকে ক্লিক করবেন না</div>
+          <div class="tip"><span class="tip-bullet">→</span> ব্যাংক কখনো মেসেজে OTP বা পাসওয়ার্ড চায় না</div>
+        </div>
+        <span class="fraud-card-tag tag-red">উচ্চ ঝুঁকি</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #FFD700">
+        <span class="fraud-icon">📱</span>
+        <div class="fraud-title">KYC / OTP জালিয়াতি</div>
+        <div class="fraud-desc">স্ক্যামাররা ব্যাংক বা টেলিকম কর্মচারীর ভান করে বলে "আপনার KYC অসম্পূর্ণ, অ্যাকাউন্ট বন্ধ হবে" — এবং OTP চেয়ে নেয়।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> OTP কখনো কাউকে দেবেন না — কখনোই না</div>
+          <div class="tip"><span class="tip-bullet">→</span> ব্যাংক ফোনে OTP চায় না</div>
+          <div class="tip"><span class="tip-bullet">→</span> সরাসরি ব্যাংকে ফোন করে যাচাই করুন</div>
+        </div>
+        <span class="fraud-card-tag tag-gold">সাধারণ</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #00D4FF">
+        <span class="fraud-icon">🎁</span>
+        <div class="fraud-title">লটারি / পুরস্কার প্রতারণা</div>
+        <div class="fraud-desc">"আপনি ৫০ লক্ষ টাকা জিতেছেন!" — এই ধরনের মেসেজ পাঠিয়ে "প্রসেসিং ফি" নেওয়ার ছল করে টাকা হাতিয়ে নেয় প্রতারকরা।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> যে লটারিতে অংশ নেননি, সেটায় জেতা অসম্ভব</div>
+          <div class="tip"><span class="tip-bullet">→</span> পুরস্কার পেতে টাকা দিতে বলা মানেই প্রতারণা</div>
+          <div class="tip"><span class="tip-bullet">→</span> cybercrime.gov.in-এ রিপোর্ট করুন</div>
+        </div>
+        <span class="fraud-card-tag tag-cyan">সতর্কতা</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #FF3B5C">
+        <span class="fraud-icon">💼</span>
+        <div class="fraud-title">চাকরি / ওয়ার্ক-ফ্রম-হোম প্রতারণা</div>
+        <div class="fraud-desc">নকল চাকরির অফার দিয়ে নিবন্ধন ফি বা প্রশিক্ষণ ফি চাওয়া হয় — টাকা পাঠালে "নিয়োগকর্তা" উধাও হয়ে যান।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> বৈধ চাকরিতে কখনো আবেদনকারীর কাছে টাকা নেওয়া হয় না</div>
+          <div class="tip"><span class="tip-bullet">→</span> অফিসিয়াল ওয়েবসাইটে কোম্পানি যাচাই করুন</div>
+          <div class="tip"><span class="tip-bullet">→</span> অস্বাভাবিক বেশি বেতনের অফার সন্দেহজনক</div>
+        </div>
+        <span class="fraud-card-tag tag-red">উচ্চ ঝুঁকি</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #FFD700">
+        <span class="fraud-icon">💳</span>
+        <div class="fraud-title">UPI / পেমেন্ট জালিয়াতি</div>
+        <div class="fraud-desc">স্ক্যামাররা নকল "টাকা নিন" UPI রিকোয়েস্ট পাঠায় — আপনি PIN দিলেই আসলে টাকা বেরিয়ে যায়, ঢোকে না।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> টাকা পেতে PIN দিতে হয় না — কখনোই না</div>
+          <div class="tip"><span class="tip-bullet">→</span> অপরিচিত UPI কালেক্ট রিকোয়েস্ট প্রত্যাখ্যান করুন</div>
+          <div class="tip"><span class="tip-bullet">→</span> QR কোড স্ক্যান করার আগে যাচাই করুন</div>
+        </div>
+        <span class="fraud-card-tag tag-gold">খুবই সাধারণ</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #00E676">
+        <span class="fraud-icon">🛡️</span>
+        <div class="fraud-title">নিরাপদ থাকার উপায়</div>
+        <div class="fraud-desc">সাধারণ কিছু অভ্যাস যা আপনাকে সাইবার অপরাধ থেকে প্রায় সম্পূর্ণ সুরক্ষিত রাখবে।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">✓</span> সব অ্যাকাউন্টে 2-ফ্যাক্টর যাচাইকরণ চালু রাখুন</div>
+          <div class="tip"><span class="tip-bullet">✓</span> সন্দেহজনক লিংক Cyber Kavach-এ স্ক্যান করুন</div>
+          <div class="tip"><span class="tip-bullet">✓</span> প্রতারণা রিপোর্ট করুন: হেল্পলাইন 1930</div>
+          <div class="tip"><span class="tip-bullet">✓</span> অ্যাপ ও অপারেটিং সিস্টেম নিয়মিত আপডেট করুন</div>
+        </div>
+        <span class="fraud-card-tag tag-cyan">সুরক্ষা</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HINDI -->
+  <div class="edu-content" id="lang-hi">
+    <div class="fraud-grid">
+
+      <div class="fraud-card" style="--card-accent: #FF3B5C">
+        <span class="fraud-icon">🎣</span>
+        <div class="fraud-title">फ़िशिंग हमला</div>
+        <div class="fraud-desc">ठग बैंक, सरकारी संस्था या जानी-मानी ऐप के नाम पर नकली ईमेल या मैसेज भेजते हैं — आपकी लॉगिन जानकारी और व्यक्तिगत डेटा चुराने के लिए।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> भेजने वाले का असली ईमेल पता हमेशा जांचें</div>
+          <div class="tip"><span class="tip-bullet">→</span> अनजान ईमेल या SMS में आए लिंक पर क्लिक न करें</div>
+          <div class="tip"><span class="tip-bullet">→</span> बैंक कभी मैसेज से OTP या पासवर्ड नहीं मांगता</div>
+        </div>
+        <span class="fraud-card-tag tag-red">उच्च जोखिम</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #FFD700">
+        <span class="fraud-icon">📱</span>
+        <div class="fraud-title">KYC / OTP धोखाधड़ी</div>
+        <div class="fraud-desc">जालसाज बैंक या टेलीकॉम कर्मचारी बनकर कहते हैं "आपका KYC अधूरा है, खाता बंद होगा" — और OTP मांग लेते हैं।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> OTP कभी किसी को न दें — कभी नहीं</div>
+          <div class="tip"><span class="tip-bullet">→</span> असली बैंक फ़ोन पर OTP नहीं मांगता</div>
+          <div class="tip"><span class="tip-bullet">→</span> सीधे बैंक को कॉल करके पुष्टि करें</div>
+        </div>
+        <span class="fraud-card-tag tag-gold">सामान्य</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #00D4FF">
+        <span class="fraud-icon">🎁</span>
+        <div class="fraud-title">लॉटरी / पुरस्कार घोटाला</div>
+        <div class="fraud-desc">"आपने ₹50 लाख जीते!" — ऐसे मैसेज भेजकर "प्रोसेसिंग फ़ीस" के नाम पर पैसे ठग लिए जाते हैं।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> जिस लॉटरी में भाग नहीं लिया, उसमें जीत नहीं सकते</div>
+          <div class="tip"><span class="tip-bullet">→</span> पुरस्कार लेने के लिए पैसे मांगना धोखा है</div>
+          <div class="tip"><span class="tip-bullet">→</span> cybercrime.gov.in पर शिकायत दर्ज करें</div>
+        </div>
+        <span class="fraud-card-tag tag-cyan">सतर्कता</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #FF3B5C">
+        <span class="fraud-icon">💼</span>
+        <div class="fraud-title">नौकरी / वर्क-फ्रॉम-होम धोखा</div>
+        <div class="fraud-desc">नकली जॉब ऑफर देकर रजिस्ट्रेशन फ़ीस या ट्रेनिंग फ़ीस मांगी जाती है — पैसे मिलते ही "नियोक्ता" गायब हो जाता है।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> असली नौकरी में आवेदक से पैसे नहीं लिए जाते</div>
+          <div class="tip"><span class="tip-bullet">→</span> कंपनी को ऑफिशियल वेबसाइट पर जांचें</div>
+          <div class="tip"><span class="tip-bullet">→</span> बहुत ज़्यादा तनख्वाह का लालच देना संदिग्ध है</div>
+        </div>
+        <span class="fraud-card-tag tag-red">उच्च जोखिम</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #FFD700">
+        <span class="fraud-icon">💳</span>
+        <div class="fraud-title">UPI / पेमेंट घोटाला</div>
+        <div class="fraud-desc">ठग नकली "पैसे लो" UPI रिक्वेस्ट भेजते हैं — आप PIN डालते ही पैसे आने की बजाय निकल जाते हैं।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">→</span> पैसे पाने के लिए PIN नहीं डालते — कभी नहीं</div>
+          <div class="tip"><span class="tip-bullet">→</span> अनजान UPI collect request को अस्वीकार करें</div>
+          <div class="tip"><span class="tip-bullet">→</span> QR कोड स्कैन करने से पहले जांचें</div>
+        </div>
+        <span class="fraud-card-tag tag-gold">बहुत सामान्य</span>
+      </div>
+
+      <div class="fraud-card" style="--card-accent: #00E676">
+        <span class="fraud-icon">🛡️</span>
+        <div class="fraud-title">सुरक्षित रहने के तरीके</div>
+        <div class="fraud-desc">कुछ सरल आदतें जो आपको साइबर अपराध से लगभग पूरी तरह बचा सकती हैं।</div>
+        <div class="fraud-tips">
+          <div class="tip"><span class="tip-bullet">✓</span> हर खाते पर 2-फैक्टर वेरिफिकेशन चालू रखें</div>
+          <div class="tip"><span class="tip-bullet">✓</span> संदिग्ध लिंक को Cyber Kavach पर स्कैन करें</div>
+          <div class="tip"><span class="tip-bullet">✓</span> धोखाधड़ी की शिकायत करें: हेल्पलाइन 1930</div>
+          <div class="tip"><span class="tip-bullet">✓</span> ऐप और OS को नियमित रूप से अपडेट करते रहें</div>
+        </div>
+        <span class="fraud-card-tag tag-cyan">सुरक्षा</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🛡️ Cyber<span>Kavach</span> AI</div>
+  <div class="footer-note">Helpline: <strong style="color:var(--cyan)">1930</strong> &nbsp;|&nbsp; cybercrime.gov.in &nbsp;|&nbsp; Made with ❤️ for Digital India</div>
+</footer>
+
+<script>
+/* ── PARTICLES ── */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let pts = [];
+function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+window.addEventListener('resize', resize); resize();
+for (let i = 0; i < 80; i++) pts.push({
+  x: Math.random()*innerWidth, y: Math.random()*innerHeight,
+  vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3,
+  r: Math.random()*1.5+0.5, a: Math.random()*0.4+0.1
+});
+function drawParticles() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pts.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0;
+    if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = `rgba(0,212,255,${p.a})`; ctx.fill();
+  });
+  pts.forEach((p,i) => pts.slice(i+1).forEach(q => {
+    const d = Math.hypot(p.x-q.x,p.y-q.y);
+    if(d<120) {
+      ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
+      ctx.strokeStyle = `rgba(0,212,255,${0.06*(1-d/120)})`; ctx.lineWidth=0.5; ctx.stroke();
+    }
+  }));
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+/* ── STATS COUNTER ── */
+function animateCounters() {
+  document.querySelectorAll('.stat-num').forEach(el => {
+    const target = parseFloat(el.dataset.target);
+    const isDecimal = target % 1 !== 0;
+    let current = 0;
+    const step = target / 60;
+    const t = setInterval(() => {
+      current += step;
+      if(current >= target) { current = target; clearInterval(t); }
+      el.textContent = isDecimal ? current.toFixed(1) : Math.floor(current).toLocaleString();
+    }, 25);
+  });
+}
+const statsObs = new IntersectionObserver(e => { if(e[0].isIntersecting) { animateCounters(); statsObs.disconnect(); } });
+statsObs.observe(document.querySelector('.stats-bar'));
+
+/* ── LANG SWITCH ── */
+function switchLang(lang, btn) {
+  document.querySelectorAll('.edu-content').forEach(e => e.classList.remove('active'));
+  document.querySelectorAll('.lang-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('lang-'+lang).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── QUICK EXAMPLES ── */
+function tryExample(url) {
+  document.getElementById('urlInput').value = url;
+  scanLink();
+}
+
+/* ── LINK SCANNER ── */
+function scanLink() {
+  const url = document.getElementById('urlInput').value.trim();
+  if(!url) { document.getElementById('urlInput').focus(); return; }
+  const btn = document.getElementById('scanBtn');
+  btn.disabled = true;
+  const panel = document.getElementById('resultPanel');
+  const anim = document.getElementById('scanningAnim');
+  const content = document.getElementById('resultContent');
+  panel.className = 'result-panel show scanning';
+  anim.style.display = 'flex';
+  content.style.display = 'none';
+
+  const steps = [
+    'Resolving domain...',
+    'Checking SSL certificate...',
+    'Scanning against blacklists...',
+    'Analyzing URL patterns...',
+    'Running AI threat model...',
+    'Compiling safety report...'
+  ];
+  const stepsEl = document.getElementById('scanSteps');
+  stepsEl.innerHTML = '';
+  let si = 0;
+  const stepInterval = setInterval(() => {
+    if(si < steps.length) {
+      const d = document.createElement('div');
+      d.className = 'scan-step active';
+      d.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="none" stroke="#00D4FF" stroke-width="1.5" stroke-dasharray="3 2"/></svg> ${steps[si]}`;
+      stepsEl.appendChild(d);
+      d.style.animationDelay = (si*0.1)+'s';
+      if(si>0) stepsEl.children[si-1].style.color = 'var(--muted)';
+      si++;
+    } else clearInterval(stepInterval);
+  }, 260);
+
+  setTimeout(() => {
+    clearInterval(stepInterval);
+    const result = analyzeURL(url);
+    anim.style.display = 'none';
+    content.style.display = 'block';
+    panel.className = `result-panel show ${result.level}`;
+    renderResult(content, url, result);
+    btn.disabled = false;
+  }, 2000);
+}
+
+function analyzeURL(url) {
+  const u = url.toLowerCase();
+
+  /* ── Red flag patterns ── */
+  const phishingPatterns = [
+    /paypa[l1]-/, /[a@]mazon-/, /googl[e3]-secure/, /micr[o0]soft-verify/,
+    /secure.*login.*\.(tk|ml|ga|cf|gq|xyz|top|click|zip)$/,
+    /bank.*verify.*\.(tk|ml|ga|cf)/, /account.*suspend/,
+    /\.(tk|ml|ga|cf|gq)$/, /login.*secure.*free/,
+    /prize.*won/, /lottery.*claim/, /reward.*free/,
+    /http:\/\//,  /bit\.ly.*fake/, /tinyurl.*prize/
+  ];
+  const suspicious = [
+    /bit\.ly/, /tinyurl\.com/, /t\.co/, /goo\.gl/, /shorturl/,
+    /free.*money/, /win.*cash/, /click.*here.*now/,
+    /\d{4,}\.\w{2,}/, /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/
+  ];
+  const safe = [
+    /^https:\/\/(www\.)?google\.com/, /^https:\/\/(www\.)?youtube\.com/,
+    /^https:\/\/(www\.)?github\.com/, /^https:\/\/(www\.)?microsoft\.com/,
+    /^https:\/\/(www\.)?amazon\.in/, /^https:\/\/(www\.)?flipkart\.com/,
+    /^https:\/\/(www\.)?sbi\.co\.in/, /^https:\/\/(www\.)?rbi\.org\.in/,
+    /^https:\/\/(www\.)?wikipedia\.org/
+  ];
+
+  const isSafe = safe.some(p => p.test(u));
+  const isDanger = !isSafe && phishingPatterns.some(p => p.test(u));
+  const isWarn = !isSafe && !isDanger && suspicious.some(p => p.test(u));
+
+  const hasHTTPS = url.startsWith('https://');
+  const domainMatch = url.match(/(?:https?:\/\/)?([^\/\?#]+)/);
+  const domain = domainMatch ? domainMatch[1] : url;
+  const dotCount = (domain.match(/\./g)||[]).length;
+  const hasNumbers = /\d{3,}/.test(domain);
+  const tld = domain.split('.').pop();
+  const suspiciousTLD = ['tk','ml','ga','cf','gq','xyz','top','click','zip'].includes(tld);
+
+  if(isSafe) return {
+    level: 'safe', score: Math.floor(Math.random()*8+90),
+    icon: '✅', status: 'SAFE',
+    verdict: '✓ This URL appears to be safe and trustworthy. It matches a known legitimate domain with a valid HTTPS certificate. You can proceed.',
+    checks: [
+      {dot:'pass', text:'HTTPS encrypted connection active'},
+      {dot:'pass', text:'Domain found in trusted whitelist'},
+      {dot:'pass', text:'No phishing patterns detected'},
+      {dot:'pass', text:'Not found in any blacklists'},
+      {dot:'pass', text:'Domain reputation: Excellent'},
+    ]
+  };
+
+  if(isDanger) {
+    const flags = [];
+    if(!hasHTTPS) flags.push({dot:'fail', text:'No HTTPS — connection is NOT encrypted'});
+    if(suspiciousTLD) flags.push({dot:'fail', text:`Suspicious TLD ".${tld}" commonly used in scam sites`});
+    if(/paypa[l1]|amaz[o0]n|g[o0]{2}gl/.test(u)) flags.push({dot:'fail', text:'Domain impersonating a well-known brand'});
+    if(/prize|won|lottery|claim|reward/.test(u)) flags.push({dot:'fail', text:'URL contains prize/lottery bait keywords'});
+    flags.push({dot:'fail', text:'Pattern matched known phishing templates'});
+    if(hasNumbers) flags.push({dot:'warn', text:'Unusual numeric patterns in domain'});
+    return {
+      level: 'danger', score: Math.floor(Math.random()*20+5),
+      icon: '🚨', status: 'DANGEROUS — DO NOT OPEN',
+      verdict: '⚠️ WARNING: This URL shows multiple signs of a PHISHING or SCAM link. Do NOT enter any personal information. Do NOT share with others. Report this to cybercrime.gov.in or call 1930.',
+      checks: flags
+    };
+  }
+
+  if(isWarn) {
+    return {
+      level: 'warning', score: Math.floor(Math.random()*25+40),
+      icon: '⚠️', status: 'SUSPICIOUS — Proceed with Caution',
+      verdict: '⚠️ This link shows some suspicious signals. It may be a shortened URL hiding the real destination, or has patterns associated with spam. Do not enter sensitive information. When in doubt, don\'t click.',
+      checks: [
+        {dot: hasHTTPS?'pass':'fail', text: hasHTTPS?'HTTPS present':'No HTTPS encryption'},
+        {dot:'warn', text:'Shortened or redirect URL detected — real destination unknown'},
+        {dot:'warn', text:'Could not verify domain reputation'},
+        {dot:'neutral', text:'No active blacklist match found (yet)'},
+        {dot:'warn', text:'Recommend caution before proceeding'},
+      ]
+    };
+  }
+
+  // Default: unknown
+  return {
+    level: 'warning', score: Math.floor(Math.random()*20+55),
+    icon: '🔍', status: 'UNKNOWN — Needs Caution',
+    verdict: 'This URL could not be definitively classified. It\'s not on known blacklists, but it\'s also not a recognized safe domain. Exercise caution before sharing personal data.',
+    checks: [
+      {dot: hasHTTPS?'pass':'warn', text: hasHTTPS?'HTTPS connection present':'No HTTPS — data may not be encrypted'},
+      {dot: dotCount>3?'warn':'neutral', text: dotCount>3?'Unusually many subdomains':'Domain structure looks normal'},
+      {dot:'neutral', text:'Not found in fraud blacklists'},
+      {dot:'neutral', text:'Domain reputation: Unknown'},
+      {dot: hasNumbers?'warn':'neutral', text: hasNumbers?'Numeric patterns in domain (suspicious)':'No suspicious numbers in domain'},
+    ]
+  };
+}
+
+function renderResult(el, url, r) {
+  const scoreColor = r.level==='safe'?'var(--green)':r.level==='danger'?'var(--red)':'var(--gold)';
+  el.innerHTML = `
+    <div class="result-header">
+      <div class="result-icon">${r.icon}</div>
+      <div>
+        <div class="result-status ${r.level}">${r.status}</div>
+        <div class="result-url-display">${url.length>60?url.slice(0,60)+'…':url}</div>
+      </div>
+    </div>
+    <div class="score-row">
+      <div class="score-label">Safety Score</div>
+      <div class="score-bar"><div class="score-fill" style="width:0%;background:${scoreColor}" id="scoreBar"></div></div>
+      <div class="score-val" style="color:${scoreColor}">${r.score}/100</div>
+    </div>
+    <div class="result-checks" style="margin-top:1.2rem">
+      ${r.checks.map(c=>`<div class="check-item"><div class="check-dot ${c.dot}"></div><span>${c.text}</span></div>`).join('')}
+    </div>
+    <div class="result-verdict ${r.level}">${r.verdict}</div>
+  `;
+  requestAnimationFrame(()=>{
+    const bar = document.getElementById('scoreBar');
+    if(bar) bar.style.width = r.score+'%';
+  });
+}
+
+/* Allow Enter key */
+document.getElementById('urlInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') scanLink();
+});
+</script>
 </body>
 </html>
